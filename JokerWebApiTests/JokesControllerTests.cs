@@ -7,7 +7,7 @@ using JokerWebApi.Models;
 
 namespace JokerWebApiTests
 {
-    public class Tests
+    public class JokesControllerTests
     {
         private readonly ILogger<JokesController> _mockLogger = new Mock<ILogger<JokesController>>().Object;
 

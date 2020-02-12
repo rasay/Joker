@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using JokerWebApi.Models;
 using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
 
 namespace JokerWebApi.Controllers
 {
@@ -17,6 +15,7 @@ namespace JokerWebApi.Controllers
     {
         private readonly ILogger<JokesController> _logger;
         private readonly IIcanhazdadjokeClient _icanhazdadjokeClient;
+        private readonly JokeSorter _jokeSorter = new JokeSorter();
 
         public JokesController(ILogger<JokesController> logger, IIcanhazdadjokeClient icanhazdadjokeClient)
         {
@@ -49,34 +48,17 @@ namespace JokerWebApi.Controllers
             foreach (var token in parsedObject.SelectToken("results"))
             {
                 var joke = token.SelectToken("joke").Value<string>();
-                int jokeLength = CountWords(joke);
+                int jokeLength = _jokeSorter.CountWords(joke);
+                string taggedJoke = _jokeSorter.TagJoke(searchTerm, joke);
 
                 if (jokeLength >= SearchResults.LONG_THRESHOLD)
-                    results.LongJokes.Add(TagJoke(joke));
+                    results.LongJokes.Add(taggedJoke);
                 else if (jokeLength >= SearchResults.MEDIUM_THRESHOLD)
-                    results.MediumJokes.Add(TagJoke(joke));
+                    results.MediumJokes.Add(taggedJoke);
                 else
-                    results.ShortJokes.Add(TagJoke(joke));
+                    results.ShortJokes.Add(taggedJoke);
             }
             return results;
-        }
-
-        private int CountWords(string joke)
-        {
-            return Regex.Matches(joke, @"[A-Za-z0-9]+").Count;
-        }
-
-        private string TagJoke(string joke)
-        {
-            var searchTermTagger = new MatchEvaluator(SearchTermTagger);
-            return Regex.Replace(joke,
-                string.Format(@"\b({0})", searchTermTagger), searchTermTagger,
-                RegexOptions.IgnoreCase);
-        }
-
-        public static string SearchTermTagger(Match match)
-        {
-            return string.Format("[{0}]", match.Value);
         }
     }
 }
