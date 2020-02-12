@@ -7,6 +7,8 @@ namespace JokerWebApi.Controllers
     public interface IIcanhazdadjokeClient
     {
         string GetRandomJoke();
+
+        string GetTop30Search(string searchTerm);
     }
 
     /// <summary>
@@ -15,7 +17,7 @@ namespace JokerWebApi.Controllers
     /// </summary>
     public class IcanhazdadjokeClient : IIcanhazdadjokeClient
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static string _userAgent = "My Library (https://github.com/rasay/Joker.git)";
 
         public IcanhazdadjokeClient()
         {
@@ -23,11 +25,21 @@ namespace JokerWebApi.Controllers
 
         public string GetRandomJoke()
         {
+            return GetResponse("https://icanhazdadjoke.com/");
+        }
+
+        public string GetTop30Search(string searchTerm)
+        {
+            return GetResponse(string.Format("https://icanhazdadjoke.com/search?term={0}&limit=30", searchTerm));
+        }
+
+        private string GetResponse(string url)
+        {
             using (var client = new WebClient())
             {
                 client.Headers.Add("Accept", "application/json");
-                client.Headers.Add("User-Agent", "SteelyDan");
-                return client.DownloadString("https://icanhazdadjoke.com/");
+                client.Headers.Add("User-Agent", _userAgent);
+                return client.DownloadString(url);
             }
         }
     }
