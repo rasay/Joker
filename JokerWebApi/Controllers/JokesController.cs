@@ -15,7 +15,7 @@ namespace JokerWebApi.Controllers
     {
         private readonly ILogger<JokesController> _logger;
         private readonly IIcanhazdadjokeClient _icanhazdadjokeClient;
-        private readonly JokeSorter _jokeSorter = new JokeSorter();
+        private readonly JokeProcessor _jokeProcessor = new JokeProcessor();
 
         public JokesController(ILogger<JokesController> logger, IIcanhazdadjokeClient icanhazdadjokeClient)
         {
@@ -38,18 +38,18 @@ namespace JokerWebApi.Controllers
         }
 
         [HttpGet("top30search")]
-        public SearchResults GetTop30Search(string searchTerm = "")
+        public SearchResults GetTop30Search(string term = "")
         {
-            _logger.LogInformation("Search top 30 jokes '{0}'", searchTerm);
+            _logger.LogInformation("Search top 30 jokes '{0}'", term);
 
             var results = new SearchResults();
-            var json = _icanhazdadjokeClient.GetTop30Search(searchTerm);
+            var json = _icanhazdadjokeClient.GetTop30Search(term);
             var parsedObject = JObject.Parse(json);
             foreach (var token in parsedObject.SelectToken("results"))
             {
                 var joke = token.SelectToken("joke").Value<string>();
-                int jokeLength = _jokeSorter.CountWords(joke);
-                string taggedJoke = _jokeSorter.TagJoke(searchTerm, joke);
+                int jokeLength = _jokeProcessor.CountWords(joke);
+                string taggedJoke = _jokeProcessor.TagJoke(term, joke);
 
                 if (jokeLength >= SearchResults.LONG_THRESHOLD)
                     results.LongJokes.Add(taggedJoke);

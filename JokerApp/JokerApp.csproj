@@ -28,10 +28,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Cauldron.Core">
+      <HintPath>..\packages\Cauldron.Core.2.0.0\lib\net45\Cauldron.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Cauldron.Mathematics">
+      <HintPath>..\packages\Cauldron.Mathematics.2.0.0\lib\net45\Cauldron.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Cauldron.Windows">
+      <HintPath>..\packages\Cauldron.Windows.2.0.0\lib\net45\Cauldron.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Cauldron.Game">
+      <HintPath>..\packages\Cauldron.Game.2.0.0\lib\net45\Cauldron.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="Cauldron.Newton">
+      <HintPath>..\packages\Cauldron.Newton.2.0.0\lib\net45\Cauldron.Newton.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

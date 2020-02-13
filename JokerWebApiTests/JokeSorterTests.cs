@@ -9,12 +9,12 @@ namespace JokerWebApiTests
 {
     public class JokeSorterTests
     {
-        JokeSorter _jokeSorter;
+        JokeProcessor _jokeSorter;
 
         [SetUp]
         public void Setup()
         {
-            _jokeSorter = new JokeSorter();
+            _jokeSorter = new JokeProcessor();
         }
 
         [Test]

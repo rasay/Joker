@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace JokerWebApi.Controllers
 {
-    public class JokeSorter
+    public class JokeProcessor
     {
-        public JokeSorter()
+        public JokeProcessor()
         {
         }
 
