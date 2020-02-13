@@ -7,7 +7,7 @@ using JokerWebApi.Models;
 
 namespace JokerWebApiTests
 {
-    public class JokeSorterTests
+    public class JokeProcessorTests
     {
         JokeProcessor _jokeSorter;
 
@@ -42,6 +42,13 @@ namespace JokerWebApiTests
         {
             Assert.AreEqual("[one] [one]'s loner two threeone [one]. ",
                 _jokeSorter.TagJoke("one", "one one's loner two threeone one. "));
+        }
+
+        [Test]
+        public void TestTagJokeWithNestedSearchTerm()
+        {
+            Assert.AreEqual("A Sandwich walks into a [bar], the bartender says",
+                _jokeSorter.TagJoke("bar", "A Sandwich walks into a bar, the bartender says"));
         }
     }
 }

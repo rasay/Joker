@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JokerWebApi", "JokerWebApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JokerWebApiTests", "JokerWebApiTests\JokerWebApiTests.csproj", "{4950D5ED-BFDA-4135-A7C8-A28D86ACCB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JokerApp", "JokerApp\JokerApp.csproj", "{C45907B3-DD3F-4D3B-9211-BC94A41857F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JokerUi", "JokerUi\JokerUi.csproj", "{421CA6F0-9475-48E4-95B5-9DE60B5E8275}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +21,9 @@ Global
 		{4950D5ED-BFDA-4135-A7C8-A28D86ACCB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4950D5ED-BFDA-4135-A7C8-A28D86ACCB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4950D5ED-BFDA-4135-A7C8-A28D86ACCB2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C45907B3-DD3F-4D3B-9211-BC94A41857F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C45907B3-DD3F-4D3B-9211-BC94A41857F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C45907B3-DD3F-4D3B-9211-BC94A41857F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C45907B3-DD3F-4D3B-9211-BC94A41857F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{421CA6F0-9475-48E4-95B5-9DE60B5E8275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{421CA6F0-9475-48E4-95B5-9DE60B5E8275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{421CA6F0-9475-48E4-95B5-9DE60B5E8275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{421CA6F0-9475-48E4-95B5-9DE60B5E8275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

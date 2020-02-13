@@ -53,7 +53,7 @@ namespace JokerWebApiTests
             Assert.AreEqual("How did the [hipster] burn the roof of his mouth? He ate the pizza before it was cool.", results.MediumJokes[0]);
 
             Assert.AreEqual(1, results.LongJokes.Count);
-            Assert.AreEqual("How many [hipster]s does it take to change a lightbulb? Oh, it's a really obscure number. You've probably never heard of it.", results.LongJokes[0]);
+            Assert.AreEqual("How many [hipsters] does it take to change a lightbulb? Oh, it's a really obscure number. You've probably never heard of it.", results.LongJokes[0]);
         }
     }
 }
