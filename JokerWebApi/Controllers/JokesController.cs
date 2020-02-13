@@ -32,9 +32,17 @@ namespace JokerWebApi.Controllers
         public string GetRandomJoke()
         {
             _logger.LogInformation("Get random joke");
-            var json = _icanhazdadjokeClient.GetRandomJoke();
-            var parsedObject = JObject.Parse(json);
-            return parsedObject.SelectToken("joke").Value<string>();
+            try
+            {
+                var json = _icanhazdadjokeClient.GetRandomJoke();
+                var parsedObject = JObject.Parse(json);
+                return parsedObject.SelectToken("joke").Value<string>();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Attempting to get random joke");
+                throw e;
+            }
         }
 
         [HttpGet("top30search")]
@@ -42,23 +50,31 @@ namespace JokerWebApi.Controllers
         {
             _logger.LogInformation("Search top 30 jokes '{0}'", term);
 
-            var results = new SearchResults();
-            var json = _icanhazdadjokeClient.GetTop30Search(term);
-            var parsedObject = JObject.Parse(json);
-            foreach (var token in parsedObject.SelectToken("results"))
+            try
             {
-                var joke = token.SelectToken("joke").Value<string>();
-                int jokeLength = _jokeProcessor.CountWords(joke);
-                string taggedJoke = _jokeProcessor.TagJoke(term, joke);
+                var results = new SearchResults();
+                var json = _icanhazdadjokeClient.GetTop30Search(term);
+                var parsedObject = JObject.Parse(json);
+                foreach (var token in parsedObject.SelectToken("results"))
+                {
+                    var joke = token.SelectToken("joke").Value<string>();
+                    int jokeLength = _jokeProcessor.CountWords(joke);
+                    string taggedJoke = _jokeProcessor.TagJoke(term, joke);
 
-                if (jokeLength >= SearchResults.LONG_THRESHOLD)
-                    results.LongJokes.Add(taggedJoke);
-                else if (jokeLength >= SearchResults.MEDIUM_THRESHOLD)
-                    results.MediumJokes.Add(taggedJoke);
-                else
-                    results.ShortJokes.Add(taggedJoke);
+                    if (jokeLength >= SearchResults.LONG_THRESHOLD)
+                        results.LongJokes.Add(taggedJoke);
+                    else if (jokeLength >= SearchResults.MEDIUM_THRESHOLD)
+                        results.MediumJokes.Add(taggedJoke);
+                    else
+                        results.ShortJokes.Add(taggedJoke);
+                }
+                return results;
             }
-            return results;
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Attempting top 30 search for term '{0}'", term);
+                throw e;
+            }
         }
     }
 }

@@ -4,6 +4,10 @@ using Newtonsoft.Json.Linq;
 
 namespace JokerApp
 {
+    /// <summary>
+    /// Simple console application that prompts the user for input from the keyboard.
+    /// Makes calls to the JokerWebApi.
+    /// </summary>
     class MainClass
     {
         public static void Main(string[] args)
@@ -38,18 +42,32 @@ namespace JokerApp
 
         private static void ShowRandomJoke()
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                Console.WriteLine(client.DownloadString("http://localhost:8080/jokes/randomjoke"));
+                using (WebClient client = new WebClient())
+                {
+                    Console.WriteLine(client.DownloadString("http://localhost:8080/jokes/randomjoke"));
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Oops. Something is wrong. Check to make sure that the JokerWebApi is running.");
             }
         }
 
         private static void ShowTop30Jokes(string searchTerm)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                string json = client.DownloadString("http://localhost:8080/jokes/top30search?term=" + searchTerm);
-                DisplayTop30Json(json);
+                using (WebClient client = new WebClient())
+                {
+                    string json = client.DownloadString("http://localhost:8080/jokes/top30search?term=" + searchTerm);
+                    DisplayTop30Json(json);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Oops. Something is wrong. Check to make sure that the JokerWebApi is running.");
             }
         }
 
