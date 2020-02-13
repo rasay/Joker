@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace JokerWebApi.Models
 {
-    public class SearchResults
+    public class SortedJokes
     {
         public const int MEDIUM_THRESHOLD = 10;
 
         public const int LONG_THRESHOLD = 20;
 
-        public SearchResults()
+        public SortedJokes()
         {
             ShortJokes = new List<string>();
             MediumJokes = new List<string>();

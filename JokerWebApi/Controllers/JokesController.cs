@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 
 using JokerWebApi.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace JokerWebApi.Controllers
 {
@@ -29,7 +30,9 @@ namespace JokerWebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("randomjoke")]
-        public string GetRandomJoke()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<string> GetRandomJoke()
         {
             _logger.LogInformation("Get random joke");
             try
@@ -41,18 +44,20 @@ namespace JokerWebApi.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "Attempting to get random joke");
-                throw e;
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
         [HttpGet("top30search")]
-        public SearchResults GetTop30Search(string term = "")
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<SortedJokes> GetTop30Search(string term = "")
         {
             _logger.LogInformation("Search top 30 jokes '{0}'", term);
 
             try
             {
-                var results = new SearchResults();
+                var results = new SortedJokes();
                 var json = _icanhazdadjokeClient.GetTop30Search(term);
                 var parsedObject = JObject.Parse(json);
                 foreach (var token in parsedObject.SelectToken("results"))
@@ -61,9 +66,9 @@ namespace JokerWebApi.Controllers
                     int jokeLength = _jokeProcessor.CountWords(joke);
                     string taggedJoke = _jokeProcessor.TagJoke(term, joke);
 
-                    if (jokeLength >= SearchResults.LONG_THRESHOLD)
+                    if (jokeLength >= SortedJokes.LONG_THRESHOLD)
                         results.LongJokes.Add(taggedJoke);
-                    else if (jokeLength >= SearchResults.MEDIUM_THRESHOLD)
+                    else if (jokeLength >= SortedJokes.MEDIUM_THRESHOLD)
                         results.MediumJokes.Add(taggedJoke);
                     else
                         results.ShortJokes.Add(taggedJoke);
@@ -73,8 +78,9 @@ namespace JokerWebApi.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "Attempting top 30 search for term '{0}'", term);
-                throw e;
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
+
         }
     }
 }
