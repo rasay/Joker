@@ -17,4 +17,4 @@ $ dotnet restore
 $ dotnet build
 $ dotnet run
 ```
-... and enjoy!
+... and go nuts!
